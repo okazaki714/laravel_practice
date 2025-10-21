@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         //$this->call(UserSeeder::class);
         $this->call(PostSeeder::class);
+        $this->call(UserSeeder::class); // UserSeeder を呼び出す記述を追加
         // User::factory(10)->create();
 
         // User::factory()->create([
