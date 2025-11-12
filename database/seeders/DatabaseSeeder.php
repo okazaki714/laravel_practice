@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Database\Seeders\UserSeeder;
 use Database\Seeders\PostSeeder;
+use Database\Seeders\TasksSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,7 +18,8 @@ class DatabaseSeeder extends Seeder
     {
         //$this->call(UserSeeder::class);
         $this->call(PostSeeder::class);
-        $this->call(UserSeeder::class); // UserSeeder を呼び出す記述を追加
+        $this->call(UserSeeder::class);
+        $this->call(TasksSeeder::class); // UserSeeder を呼び出す記述を追加
         // User::factory(10)->create();
 
         // User::factory()->create([

@@ -45,7 +45,7 @@ class PostController extends Controller
 
     public function create()
     {
-    return view('admin.posts.input');
+        return view('admin.posts.input');
     }
 
      public function store(Request $request)
@@ -134,7 +134,7 @@ class PostController extends Controller
             'published_at.date_format' => ':attributeは正しい日時形式で入力してください。',
         ];
 
-        $attributes = [
+        $attributes = [ //attrbuteはlalavelの機能の一つ。（便利な変数みたいな感じ）ここでは複数形で書かれているが、上のように中のものを単数として呼び出せる
             'title' => 'タイトル',
             'body' => '本文',
             'published_at' => '公開日時',
