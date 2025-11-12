@@ -11,7 +11,7 @@
                 <div class="p-6 text-gray-900">
                 <form action="admin.posts.index" method="get">
                     <input type="text">
-                    <button type="submit">検索</button>
+                    <button type="submit">検索う</button>
                 </form>    
                     @if (session('success'))
                         <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded relative" role="alert">
