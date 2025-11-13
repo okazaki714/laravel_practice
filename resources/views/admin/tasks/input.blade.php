@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            タスク投稿
+            {{ isset($task) ? ' タスク編集（ID: ' . $task->id . '）' : '新規投稿' }}
         </h2>
     </x-slot>
 
@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <h1 class="text-2xl font-bold mb-6">タスク投稿</h1>
+                    <h1 class="text-2xl font-bold mb-6">{{ isset($task) ? 'タスク編集' : '新規投稿' }}</h1>
 
                     {{-- バリデーションエラーメッセージの表示 --}}
                     @if ($errors->any())
@@ -23,8 +23,14 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('admin.tasks.store') }}" method="POST">
+                    {{-- フォームの action と method を登録/更新で切り替える --}}
+                    <form action="{{ isset($task) ? route('admin.tasks.update', $task->id) : route('admin.tasks.store') }}" method="POST">
                         @csrf
+                        {{-- 既存記事編集の場合はPUTメソッドを指定 --}}
+                        @if (isset($task))
+                            @method('PUT')
+                        @endif
+
                         <div class="mb-4">
                             <label for="title" class="block text-gray-700 text-sm font-bold mb-2">タイトル：</label>
                             <input type="text" name="title" id="title" value="{{ old('title', $task->title ?? '') }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
@@ -70,7 +76,7 @@
 
                         <div class="flex items-center justify-end">
                             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                                投稿
+                                {{ isset($task) ? '更新' : '投稿' }}
                             </button>
                         </div>
                     </form>

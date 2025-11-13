@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable(false);
-            $table->text('content')->nullable(false);
-            $table->dateTime('deadline_at')->nullable(false);
-            $table->dateTime('support_at');
-            $table->integer('priority')->nullable(false);
-            $table->integer('status')->nullable(false);
+            $table->string('title')->nullable(false);//nullableになっているがvalidationでエラーするようにしたため一旦このままになってる
+            $table->text('content')->nullable(false);//nullableになっているがvalidationでエラーするようにしたため一旦このままになってる
+            $table->dateTime('deadline_at')->nullable(false);//nullableになっているがvalidationでエラーするようにしたため一旦このままになってる
+            $table->dateTime('support_at');//->nullable(false)になっていないままマイグレーションを実行。sql側クエリでALTER TABLE tasks MODIFY support_at DATETIME NULL;を実行済
+            $table->integer('priority')->nullable(false);//nullableになっているがセレクトボックスで空欄にならないようにしたため一旦このままになってる
+            $table->integer('status')->nullable(false);//nullableになっているがセレクトボックスで空欄にならないようにしたため一旦このままになってる
             $table->timestamps();
             $table->softDeletes();
         });
