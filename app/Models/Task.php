@@ -8,10 +8,7 @@ use Illuminate\Http\Request;
 
 class Task extends Model
 {
-
     use SoftDeletes;
-
-    
 
     public function saveTask(Request $request)
     {
@@ -22,12 +19,14 @@ class Task extends Model
         $this->support_at = !empty($request->input('support_at')) ? $request->input('support_at') : null;//対応日時
         $this->priority = !empty($request->input('priority')) ? $request->input('priority') : null;//優先度
         $this->status = !empty($request->input('status')) ? $request->input('status') : null;//ステータス
-        /*$this->updated_at = $request->input('updated_at');//更新日時
-        // published_at は nullable なので、空文字列の場合には null を設定
-        $this->published_at = !empty($request->input('published_at')) ? $request->input('published_at') : null;
-*/
+        $this->user_id = !empty($request->input('user_id')) ? $request->input('user_id') : null;//内容
         // 登録処理
         $this->save();
     }
 
+    //tasks.user_id と users.idを紐づけ
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

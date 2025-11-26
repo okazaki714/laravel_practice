@@ -5,13 +5,26 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth; // Authファサードを使用する場合
 
 class TaskController extends Controller
 {
-     public function index()
+    //ダッシュボード表示用メソッド
+    public function dashboard()
     {
+        // status が 2 以下のタスクだけ取得
+        $tasks = Task::where('status', '<=', 2)->get();
+        $loginUserId = auth()->id();
+
+        return view('dashboard', compact('tasks', 'loginUserId'));
+    }
+
+    public function index()
+    {
+        $loginUserId = auth()->id();
+
         $tasks = Task::all();
-        return view('admin.tasks.index', compact('tasks'));
+        return view('admin.tasks.index', compact('tasks', 'loginUserId'));
     }
 
      public function show($id)
@@ -57,7 +70,7 @@ class TaskController extends Controller
     {
         // 指定IDの記事を取得。見つからなければ404エラー
         $task = Task::findOrFail($id);
-
+        
         // 新規作成時と同じビュー ('posts.create') を再利用し、記事データを渡す
         return view('admin.tasks.input', compact('task'));
     } 
@@ -103,15 +116,17 @@ class TaskController extends Controller
         $rules = [
             'title' => 'required|max:100',
             'content' => 'required|max:1000',
+            'user_id'  => 'required' ,
             'deadline_at' => 'required|date_format:Y-m-d\TH:i', // HTMLのdatetime-local形式に対応
             'support_at' => 'nullable|date_format:Y-m-d\TH:i', // HTMLのdatetime-local形式に対応
-            ];
+        ];
 
         $messages = [
             'title.required' => ':attributeは必須項目です。',
             'title.max' => ':attributeは:max文字以内で入力してください。',
             'content.required' => ':attributeは必須項目です。',
             'content.max' => ':attributeは:max文字以内で入力してください。',
+            'user_id.required' => ':attributeは必須項目です。',
             'deadline_at.required' => ':attributeは必須項目です。',
             'deadline_at.date_format' => ':attributeは正しい日時形式で入力してください。',
             'support_at.date_format' => ':attributeは正しい日時形式で入力してください。',
@@ -120,11 +135,11 @@ class TaskController extends Controller
         $attributes = [   //attrbuteはlalavelの機能の一つ。（便利な変数みたいな感じ）ここでは複数形で書かれているが、上のように中のものを単数として呼び出せる
             'title' => 'タイトル',
             'content' => '内容',
+            'user_id' => '担当者',
             'deadline_at' => '対応期限',
             'support_at' => '対応日時',
         ];
 
         return Validator::make($request->all(), $rules, $messages, $attributes);
     }
-
 }

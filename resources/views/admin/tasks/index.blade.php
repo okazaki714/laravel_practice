@@ -1,15 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold text-gray-800">
-            記事一覧
+            タスク一覧
         </h2>
     </x-slot>
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white shadow-sm rounded-lg">
-                <div class="p-6 text-gray-900">
-                    
+                <div class="p-6 text-gray-900">                   
                     @if (session('success'))
                         <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded relative" role="alert">
                             {{ session('success') }}
@@ -26,6 +25,7 @@
                             <tr>
                                 <th class="border px-4 py-2">ID</th>
                                 <th class="border px-4 py-2">タイトル</th>
+                                <th class="border px-4 py-2">担当者</th>
                                 <th class="border px-4 py-2">対応期限</th>
                                 <th class="border px-4 py-2">優先度</th>
                                 <th class="border px-4 py-2">ステータス</th>
@@ -37,6 +37,7 @@
                                 <tr>
                                     <td class="border px-4 py-2">{{ $val->id }}</td>
                                     <td class="border px-4 py-2">{{ $val->title }}</td>
+                                    <td class="border px-4 py-2">{{ $val->user->name ?? '不明' }}</td>
                                     <td class="border px-4 py-2">{{ $val->deadline_at }}</td>                                    
                                     <td class="border px-4 py-2">{{ config('const.task.status')[$val->status] ?? '不明' }}</td>
                                     <td class="border px-4 py-2">{{ config('const.task.priority')[$val->priority] ?? '不明' }}</td>

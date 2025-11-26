@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+/*カリキュラムにはこれは行ってる*///use Illuminate\Support\Carbon; // 日時を入れるためによく使います
 
 return new class extends Migration
 {

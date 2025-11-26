@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold text-gray-800">
-            記事詳細（ID: {{ $task->id }}）
+            タスク詳細（ID: {{ $task->id }}）
         </h2>
     </x-slot>
 
@@ -14,8 +14,8 @@
                         <strong>内容:</strong>
                         <p class="mt-2 whitespace-pre-line">{!! nl2br(e($task->content)) !!}</p>
                     </div>
-                    <p class="mb-2">対応期限: {{ $task->deadline_at ? (new \Carbon\Carbon($task->deadline_at ))->format('Y-m-d H:i:s') : '未定' }}</p>
-                    
+                    <div><label for="user_id" class="block text-gray-700 text-sm font-bold mb-2">担当者：</label>{!! nl2br(e($task->user->name)) !!}</div>
+                    <p class="mb-2">対応期限: {{ $task->deadline_at ? (new \Carbon\Carbon($task->deadline_at ))->format('Y-m-d H:i:s') : '未定' }}</p>                  
                     <div><label for="support_at" class="block text-gray-700 text-sm font-bold mb-2">対応日時：{{ $task->support_at ? (new \Carbon\Carbon($task->support_at ))->format('Y-m-d H:i:s') : '未定' }}</label></div>
                     <div><label for="priority" class="block text-gray-700 text-sm font-bold mb-2">優先度：</label>{{ config('const.task.priority')[$task->priority] ?? '不明' }}</div>
                     <div><label for="status" class="block text-gray-700 text-sm font-bold mb-2">ステータス：</label>{{ config('const.task.status')[$task->status] ?? '不明' }}</div>

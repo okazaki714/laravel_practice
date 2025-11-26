@@ -14,6 +14,10 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+//dashboardにタスクを表示用ルート
+Route::get('/dashboard', [TaskController::class, 'dashboard'])
+    ->middleware(['auth'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
 
@@ -46,6 +50,9 @@ Route::middleware('auth')->group(function () {
         // 更新処理の実行
     Route::put('/admin/tasks/{id}/update', [TaskController::class, 'update'])->name('admin.tasks.update');//更新処理
     Route::delete('/admin/tasks/{id}/destroy', [TaskController::class, 'destroy'])->name('admin.tasks.destroy');//削除処理
+
+    //以下追加仕様
+    
 
 });
 
